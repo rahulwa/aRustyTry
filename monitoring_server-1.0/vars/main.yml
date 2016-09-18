@@ -1,0 +1,15 @@
+# variables used in this monitoring-app role
+
+postgres_user_password: "graphite_user123$"
+
+graphite_port: 8888
+
+grafana_proxy_port: 80
+server_dns_name: "monitor.synup.com"
+
+seyren_SMTP_HOST: "smtp.gmail.com"
+seyren_SMTP_PORT: "587"
+seyren_SMTP_FROM: "alerts@example.com"
+seyren_SMTP_USERNAME: "alerts@example.com"
+seyren_SMTP_PASSWORD: "password"
+seyren_SLACK_USERNAME: "alerts@example.com"

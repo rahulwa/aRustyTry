@@ -1,0 +1,34 @@
+---
+  - name: Download Mongodb, prerequisite of seyren
+    get_url: url=https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.12.tgz dest=/opt/mongodb-linux-x86_64-3.0.12.tgz
+
+  - name: extract Mongodb
+    unarchive: src=/opt/mongodb-linux-x86_64-3.0.12.tgz dest=/opt copy=no
+
+  - name: renaming mongodb
+    command: mv /opt/mongodb-linux-x86_64-3.0.12 /opt/mongodb
+    ignore_errors: yes
+
+  - name: creating db directory for mongodb
+    file: path=/data/db state=directory owner=root group=root mode=0755
+
+  - name: creating systyemd unit file for mongodb
+    copy: src=mongodb.service dest=/etc/systemd/system/mongodb.service
+    notify: restart mongodb
+
+  - name: Installing prerequisiste for Seyren
+    apt: name=openjdk-8-jre-headless state=present
+
+  - name: Download seyren jar file
+    get_url: url=https://github.com/scobal/seyren/releases/download/1.3.0/seyren-1.3.0.jar dest=/opt
+
+  - name: copying seyren startup script
+    template: src=seyren-start.sh dest=/opt/seyren-start.sh owner=root group=root mode=744
+
+  - name: copying seyren stop scripts
+    copy: src=seyren-stop.sh dest=/opt/seyren-stop.sh owner=root group=root mode=744
+
+  - name: copying seyren init script
+    copy: src=seyren dest=/etc/init.d/seyren owner=root group=root mode=744
+    notify: restart seyren
+    register: seyren_done

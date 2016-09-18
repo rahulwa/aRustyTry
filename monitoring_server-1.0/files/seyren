@@ -1,0 +1,18 @@
+#!/bin/bash
+# Seyren
+#
+# description: startup script for seyren
+case $1 in
+    start)
+        /bin/bash /opt/seyren-start.sh
+    ;;
+    stop)
+        /bin/bash /opt/seyren-stop.sh
+    ;;
+    restart)
+        /bin/bash /opt/seyren-stop.sh
+        sleep 5
+        /bin/bash /opt/seyren-start.sh
+    ;;
+esac
+exit 0
