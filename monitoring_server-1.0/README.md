@@ -5,7 +5,7 @@ A Monitoring server that uses
  - [collectd](https://collectd.org) to collect hosts metrics
  - [graphite](https://graphiteapp.org) as time series database
  - [grafana](grafana.org) for visualizing metrics
- - fillally uses [seyren](https://github.com/scobal/seyren) for alerting system.
+ - finally uses [seyren](https://github.com/scobal/seyren) for alerting system.
 
 Requirements
 ------------
