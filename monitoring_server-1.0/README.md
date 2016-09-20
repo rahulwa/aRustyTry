@@ -334,9 +334,7 @@ server  {
         listen 80;
         #listen 443 ssl http2;
         #listen [::]:443 ssl http2;
-        server_name monitor.synup.com;
-        #include snippets/ssl-monitor.synup.com.conf;
-        #include snippets/ssl-params.conf;
+        server_name monitor.example.com;
 
         root /usr/share/grafana/;
 
