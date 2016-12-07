@@ -1,0 +1,24 @@
+---
+# tasks file for node_exporter
+  - name: ensure apt cache is up to date
+    apt: update_cache=yes
+    tags:
+      - node_exporter
+
+  - name: download and untar node_exporter tarball
+    unarchive:
+      src: "https://github.com/prometheus/node_exporter/releases/download/{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64.tar.gz"
+      dest: /opt
+      copy: no
+    tags:
+      - node_exporter
+
+
+  - name: copy node_exporter.service script
+    template:
+      src: node_exporter.service
+      dest: /etc/systemd/system/node_exporter.service
+      force: yes
+    notify: restart node_exporter
+    tags:
+      - node_exporter

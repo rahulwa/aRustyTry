@@ -1,0 +1,11 @@
+---
+  - name: Installing nginx
+    apt: name=nginx state=present
+    register: nginx_installation
+
+  - name: delete nginx default site file
+    file: path=/etc/nginx/sites-enabled/default state=absent
+
+  - name: reverse proxy grafana to port {{grafana_proxy_port}} on {{server_dns_name}}
+    template: src=synup-grafana.conf dest=/etc/nginx/sites-enabled/synup-grafana.conf force=yes
+    notify: restart nginx

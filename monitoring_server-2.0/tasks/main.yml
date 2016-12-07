@@ -1,0 +1,98 @@
+---
+# tasks file for prometheus
+  - name: ensure apt cache is up to date
+    apt: update_cache=yes
+
+  - name: download and untar prometheus tarball
+    unarchive:
+      src: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+      dest: /opt
+      copy: no
+
+  - name: download and untar prometheus alertmanager tarball
+    unarchive:
+      src: "https://github.com/prometheus/alertmanager/releases/download/v{{ prometheus_alertmanager_version }}/alertmanager-{{ prometheus_alertmanager_version }}.linux-amd64.tar.gz"
+      dest: /opt
+      copy: no
+
+  - name: Create Prometheus User
+    user:
+      name: prometheus
+      createhome: no
+      shell: /sbin/nologin
+      comment: "Prometheus User"
+      state: present
+    tags:
+      - node_exporter
+
+  - name: mkdir /data
+    file: path=/data state=directory owner=root group=root mode=0777
+
+  - name: mkdir config and data directory
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: prometheus
+      group: prometheus
+      mode: 0775
+    with_items:
+      - "/etc/default/prometheus"
+      - "/data/prometheus"
+
+  - name: Copy prometheus.yml, alertmanager.yml and alert.rules
+    template:
+      src: "{{ item }}"
+      dest: /etc/default/prometheus
+      owner: prometheus
+      group: prometheus
+      mode: 0644
+      force: yes
+    with_items:
+      - "prometheus.yml"
+      - "alertmanager.yml"
+
+  - name: Copy alert.rules
+    copy: src=alert.rules dest=/etc/default/prometheus owner=prometheus group=prometheus mode=0644 force=yes
+
+  - name: Copy Systemd service file
+    template:
+      src: "{{ item }}"
+      dest: /etc/systemd/system
+      owner: root
+      group: root
+      mode: 0644
+      force: yes
+    with_items:
+      - "prometheus.service"
+      - "alertmanager.service"
+    notify: restart prometheus
+    notify: restart alertmanager
+
+  - include: node_exporter.yml
+    static: yes
+    tags:
+      - node_exporter
+
+  - include: grafana.yml
+    static: yes
+
+  - include: nginx.yml
+    static: yes
+
+# running all handlers manually for prometheus
+  - name: restart prometheus
+    service: name=prometheus state=restarted enabled=yes
+
+  - name: restart alertmanager
+    service: name=alertmanager state=restarted enabled=yes
+
+  - name: restart node_exporter
+    service: name=node_exporter state=restarted enabled=yes
+    tags:
+      - node_exporter
+
+  - name: restart grafana
+    service: name=grafana-server state=restarted enabled=yes
+
+  - name: restart nginx
+    service: name=nginx state=restarted enabled=yes
