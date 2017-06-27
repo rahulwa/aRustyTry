@@ -1,7 +1,7 @@
 /*style ends */
 html {
 	box-sizing: border-box;
-	font-family: 'Roboto', 'Open Sans', sans-serif;
+	font-family: "Roboto", "Open Sans", sans-serif;
 }
 
 title {
@@ -12,7 +12,7 @@ title {
 	margin-top: 5%;
     margin-bottom: 5%;
     margin-right: 8%;
-    margin-left: 5%;	    
+    margin-left: 5%;
 }
 
 /*style ends */
@@ -41,7 +41,7 @@ header > .right {
 .right > .name {
 	font-weight: 100;
 	font-size: 4em;
-	margin: 0px;
+	margin: 0;
 	color: DarkSlateGray;
 	letter-spacing: 2px;
 }
@@ -49,7 +49,7 @@ header > .right {
 .right > .post {
 	font-weight: 300;
 	font-size: 1.3em;
-	margin: 0px;
+	margin: 0;
 	color: DarkSlateGray;
 }
 
@@ -72,7 +72,7 @@ header > hr {
 .sidebar-container {
 	width: 10%;
 	float: left;
-	/*margin-right: 5%;*/
+	flex-grow: 0;
 }
 .sidebar-item {
 	list-style: none;
@@ -91,12 +91,15 @@ header > hr {
     font-size: 1.5em;
     color: LightSlateGray;
 }
+
 .sidebar-item > .iris-blue {
 	background: #02b3e4;
 }
+
 .sidebar-item > .nile-blue {
 	background: #2d3c49;
 }
+
 .sidebar-item > .bali-hai {
 	background: #7d97ad;
 }
@@ -109,18 +112,22 @@ header > hr {
 	float: right;
 	/*margin-left: 10%;*/
 }
+
 .content {
 	max-height:100%; 
 	max-width:100%;
 }
+
 .main-image-container {
 	margin: 0;
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
 .main-image{
 	width: 100%;
 }
+
 .heading {
 	font-weight: 300;
 	font-size: 2em;
@@ -128,9 +135,11 @@ header > hr {
 	color: LightSlateGray;	
 	letter-spacing: 2px;
 }
+
 .list-image-container {
 	width: 100%;
 }
+
 .list-image-container > .image {
 	width: 100%;
 }
@@ -139,28 +148,34 @@ header > hr {
 	width: 100%;
 	padding-left: 0px;
 }
+
 .work-list > li {
 	width: 30%;
 	float: left;
 	list-style: none;
 }
+
 .list2 {
 	margin-left : 5%;
 	margin-right: 5%;
 }
+
 .list-name {
 	text-align: center;
 	font-size: 2em;
 	color: DarkSlateGray;
 }
+
 .list-link-container {
 	text-align: center;
 }
+
 .list-link {
 	font-weight: 100;
 	color: DarkSlateGray;
 	font-size: 0.9em;
 }
+
 .clear::before, .clear::after {
     content: '';
     display: table;
