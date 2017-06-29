@@ -60,7 +60,6 @@ header > .right {
 	max-width: 100%;
     height: 100%;
     width: 5em;
-    /*background-size: contain;*/
 }
 
 header > hr {
@@ -183,3 +182,55 @@ header > hr {
     clear: both;
 }
 /*content styles end*/
+
+/*For mobile and tablet*/
+@media only screen and (max-width: 700px), screen and (min-height: 900px) {
+	/*header styles*/
+
+	.left > .logo {
+		max-width: 100%;
+	    height: 100%;
+	    width: 5em;
+	    /*background-size: contain;*/
+	}
+
+
+	/*header styles ends*/
+
+	/*sidebar styles*/
+
+	.sidebar-container {
+		flex: 0 0 10%;
+	}
+
+	.sidebar-item > .rectangle {
+		width: 15px;
+		float: right;
+		height: 15px;
+		margin-bottom: 10px;
+	}
+
+	.sidebar-item > .figcaption {
+		width: 100%;
+		margin-bottom: 20px;
+	    text-align: right;
+	    font-size: 2vmin;
+	    color: LightSlateGray;
+	}
+
+	.work-list > li {
+		width: 100%;
+		/*float: left;*/
+		list-style: none;
+	}
+
+}
+
+@media only screen and (max-width: 500px) {
+	.left > .logo {
+		max-width: 100%;
+	    height: 100%;
+	    width: 2em;
+	    /*background-size: contain;*/
+	}
+}
