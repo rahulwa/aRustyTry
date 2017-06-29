@@ -14,7 +14,7 @@ title {
     margin-right: 8%;
     margin-left: 5%;
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
 }
 
 /*style ends */
@@ -23,7 +23,7 @@ title {
 
 .header-container {
 	margin-left: 15%;
-	flex: 0 0 100%;
+	flex: 0 0 85%;
 }
 
 header > .left {
@@ -73,10 +73,7 @@ header > hr {
 /*sidebar styles*/
 
 .sidebar-container {
-	width: 10%;
 	flex: 0 0 10%;
-	float: left;
-	display: inline-block;
 }
 .sidebar-item {
 	list-style: none;
@@ -112,10 +109,8 @@ header > hr {
 /*content styles */
 
 .content-container {
-	width: 85%;
-	float: right;
 	flex: 0 0 85%;
-	display: inline-block;
+	margin-left: 5%;
 }
 
 .content {
