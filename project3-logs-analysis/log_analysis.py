@@ -11,7 +11,6 @@ def connect(database_name):
         return db, c
     except psycopg2.Error as e:
         print("Unable to connect to database")
-        # THEN perhaps exit the program
         sys.exit(1)
 
 
@@ -28,11 +27,14 @@ def fetch_query(query):
 
 
 def print_table(output):
+    """
+    Formats the output returned by database
+    """
     for x in output:
         print('')
         for value in x:
             print(value, "  ", end='')
-    print("\n=========================")
+    print("\n" + "=" * 30)
 
 
 def print_top_articles():
@@ -41,12 +43,13 @@ def print_top_articles():
     """
     print("""The 3 most popular articles of all time:
         (Title, Views_Count)""")
-    query = """SELECT articles.title,
-               count(*) AS views
+    query = """SELECT articles.title, views
             FROM articles
-            LEFT JOIN log ON log.path = concat('/article/', articles.slug)
-            WHERE log.status = '200 OK'
-            GROUP BY articles.title
+            LEFT JOIN (select path, count(path) as views
+                       from log
+                       where status like '%200%'
+                       group by log.path) as log
+            ON log.path = concat('/article/', articles.slug)
             ORDER BY views DESC limit 3;"""
     results = fetch_query(query)
     print_table(results)
@@ -93,6 +96,7 @@ def print_top_error_days():
             HAVING ((CAST(log2.error AS DECIMAL)
                / count(*)) * 100) >= cast(1 AS DECIMAL);"""
     results = fetch_query(query)
+    # print(" {0:%B %d, %Y} - {1:.2f}% errors".format(date, percentage))
     print_table(results)
 
 
