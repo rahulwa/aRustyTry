@@ -12,17 +12,4 @@ Run this project:
 `python3 log_analysis.py`
 
 
-Used SQL view is
-
-```sql
-CREATE VIEW log_slug AS
-SELECT ip,
-       METHOD,
-       status,
-       id,
-       TIME,
-       path,
-       trim(LEADING '/arcticle'
-            FROM path) "slug"
-FROM log;
-```
+Not using sql views for this project.
