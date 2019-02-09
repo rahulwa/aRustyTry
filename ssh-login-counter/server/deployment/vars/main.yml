@@ -1,0 +1,4 @@
+systemd_unit_file: ssh-login-counter-server.service
+project_root: /root/
+project_repo: https://github.com/rahulwa/aRustyTry.git
+branch: master

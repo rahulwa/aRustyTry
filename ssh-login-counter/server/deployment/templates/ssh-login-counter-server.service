@@ -1,0 +1,15 @@
+[Unit]
+Description=SSH Login Counter Server
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory={{ project_root }}
+Restart=always
+RestartSec=10
+ExecStart={{ project_root }}/target/release/aRustyTry_sshLoggerServer
+
+
+[Install]
+WantedBy=multi-user.target

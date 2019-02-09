@@ -1,5 +1,5 @@
 [package]
-name = "aRustyTry"
+name = "aRustyTry_sshLoggerServer"
 version = "0.1.0"
 authors = ["Rahul Sinha <rahul@rahulwa.com>"]
 edition = "2018"

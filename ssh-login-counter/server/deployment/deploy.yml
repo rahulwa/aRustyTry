@@ -1,0 +1,44 @@
+---
+- hosts: all
+  become: yes
+  vars_files:
+    - vars/main.yml
+  tasks:
+
+    - name: Installing necessary pacakge
+      apt: name="{{ item }}" state=present update_cache=yes
+      with_items:
+      - curl
+
+    - name: Installing Rust
+      shell: curl https://sh.rustup.rs -sSf | sh
+
+    - name: Making Rust nightly default
+      shell: rustup default nightly
+
+    - name: Clone or update project
+      git:
+        repo: "{{ project_repo }}"
+        dest: "{{ project_root }}"
+        version: "{{ branch }}"
+        update: yes
+        force: yes
+        accept_hostkey: yes
+
+    - name: Compile the project
+      shell: |
+        cd {{ project_root }}/ssh-login-counter/server;
+        cargo build --release --jobs 4;
+
+    - name: Copy Systemd file for server
+      template:
+        src: "templates/ssh-login-counter-server.service"
+        dest: "/etc/systemd/system/{{ systemd_unit_file }}"
+        force: yes
+
+    - name: Restart the service
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        enabled: yes
+        name: "{{ systemd_unit_file }}"

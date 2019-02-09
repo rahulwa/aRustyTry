@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Installing necessary pacakges
+      apt: name="{{ item }}" state=present update_cache=yes
+      with_items:
+      - curl
+
+    - name: Copy script file for server
+      template:
+        src: "ssh-logger.sh"
+        dest: "/root/ssh_logger_agent.sh"
+        mode: 0744
+        force: yes
+
+    - name: enable sudo privilege for for {{ user }}
+      lineinfile:
+        dest: /etc/pam.d/sshd
+        line: 'session    optional    pam_exec.so /root/ssh_logger_agent.sh'
