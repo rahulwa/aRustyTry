@@ -1,0 +1,236 @@
+/*style ends */
+html {
+	box-sizing: border-box;
+	font-family: "Roboto", "Open Sans", sans-serif;
+}
+
+title {
+    display: none;
+}
+
+.body-container {
+	margin-top: 5%;
+    margin-bottom: 5%;
+    margin-right: 8%;
+    margin-left: 5%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+/*style ends */
+
+/*header styles*/
+
+.header-container {
+	margin-left: 15%;
+	flex: 0 0 85%;
+}
+
+header > .left {
+	display: inline-block;
+    float: left;
+    height: 100%;
+}
+
+header > .right {
+	display: inline-block;
+    float: right;
+    text-align: right;
+    text-transform: capitalize;
+    height: 100%;
+    margin-bottom: 3%;
+}
+
+.right > .name {
+	font-weight: 100;
+	font-size: 9vmin;
+	margin: 0;
+	color: DarkSlateGray;
+	letter-spacing: 2px;
+}
+
+.right > .post {
+	font-weight: 300;
+	font-size: 3vmin;
+	margin: 0;
+	color: DarkSlateGray;
+}
+
+.left > .logo {
+	max-width: 100%;
+    height: 100%;
+    width: 5em;
+}
+
+header > hr {
+	clear: both;
+	height: 3px;
+	background: LightSlateGray;
+}
+
+/*header styles ends*/
+
+/*sidebar styles*/
+
+.sidebar-container {
+	flex: 0 0 10%;
+}
+.sidebar-item {
+	list-style: none;
+}
+.sidebar-item > .rectangle {
+	width: 70%;
+	float: right;
+	height: 75px;
+	margin-bottom: 10px;
+}
+
+.sidebar-item > .figcaption {
+	width: 100%;
+	margin-bottom: 20px;
+    text-align: right;
+    font-size: 4vmin;
+    color: LightSlateGray;
+}
+
+.sidebar-item > .iris-blue {
+	background: #02b3e4;
+}
+
+.sidebar-item > .nile-blue {
+	background: #2d3c49;
+}
+
+.sidebar-item > .bali-hai {
+	background: #7d97ad;
+}
+/*style ends*/
+
+/*content styles */
+
+.content-container {
+	flex: 0 0 85%;
+	margin-left: 5%;
+}
+
+.content {
+	max-height:100%;
+	max-width:100%;
+}
+
+.main-image-container {
+	margin: 0;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.main-image{
+	width: 100%;
+}
+
+.heading {
+	font-weight: 300;
+	font-size: 5vmin;
+	margin: 10px;
+	color: LightSlateGray;
+	letter-spacing: 2px;
+}
+
+.list-image-container {
+	width: 100%;
+}
+
+.list-image-container > .image {
+	width: 100%;
+}
+
+.work-list{
+	width: 100%;
+	padding-left: 0px;
+}
+
+.work-list > li {
+	width: 30%;
+	float: left;
+	list-style: none;
+}
+
+.list2 {
+	margin-left : 5%;
+	margin-right: 5%;
+}
+
+.list-name {
+	text-align: center;
+	font-size: 5.5vmin;
+	color: DarkSlateGray;
+}
+
+.list-link-container {
+	text-align: center;
+}
+
+.list-link {
+	font-weight: 100;
+	color: DarkSlateGray;
+	font-size: 2.3vmin;
+}
+
+.clear::before, .clear::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+/*content styles end*/
+
+/*For mobile and tablet*/
+@media only screen and (max-width: 700px), screen and (min-height: 900px) {
+	/*header styles*/
+
+	.left > .logo {
+		max-width: 100%;
+	    height: 100%;
+	    width: 5em;
+	    /*background-size: contain;*/
+	}
+
+
+	/*header styles ends*/
+
+	/*sidebar styles*/
+
+	.sidebar-container {
+		flex: 0 0 10%;
+	}
+
+	.sidebar-item > .rectangle {
+		width: 15px;
+		float: right;
+		height: 15px;
+		margin-bottom: 10px;
+	}
+
+	.sidebar-item > .figcaption {
+		width: 100%;
+		margin-bottom: 20px;
+	    text-align: right;
+	    font-size: 2vmin;
+	    color: LightSlateGray;
+	}
+
+	.work-list > li {
+		width: 100%;
+		/*float: left;*/
+		list-style: none;
+	}
+
+}
+
+@media only screen and (max-width: 500px) {
+	.left > .logo {
+		max-width: 100%;
+	    height: 100%;
+	    width: 2em;
+	    /*background-size: contain;*/
+	}
+}
