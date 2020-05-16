@@ -1,0 +1,14 @@
+---
+  - name: ensure apt cache is up to date
+    apt: update_cache=yes
+
+  - name: Install collectd
+    apt: name=collectd state=present
+    apt: name=collectd-utils state=present
+    register: collectd_installation
+
+  - name: Configure collectd
+    copy: src=collectd.conf dest=/etc/collectd/collectd.conf owner=root group=root mode=644 backup=yes
+    when: collectd_installation
+    notify: restart collectd
+    register: collectd_done

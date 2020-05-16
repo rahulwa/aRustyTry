@@ -1,0 +1,10 @@
+[Unit]
+Description=Mongo database
+After=network.target
+
+[Service]
+ExecStart=/opt/mongodb/mongodb-linux-x86_64-3.0.12/bin/mongod
+
+
+[Install]
+WantedBy=default.target

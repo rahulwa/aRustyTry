@@ -1,0 +1,12 @@
+[Unit]
+Description=Prometheus Alert Manager service
+After=network.target auditd.service
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/opt/alertmanager-{{ prometheus_alertmanager_version }}.linux-amd64/alertmanager -config.file="/etc/default/prometheus/alertmanager.yml"
+Restart=always
+
+[Install]
+WantedBy=default.target

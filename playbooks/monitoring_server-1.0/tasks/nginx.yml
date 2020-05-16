@@ -1,0 +1,29 @@
+---
+  - name: ensure apt cache is up to date
+    apt: update_cache=yes
+
+  - name: Stop apache2
+    service: name=apache2 state=stopped
+    notify: restart apache2
+
+  - name: Installing nginx
+    apt: name=nginx state=present
+    register: nginx_installation
+
+  - name: delete nginx default site file
+    file: path=/etc/nginx/sites-enabled/default state=absent
+
+  - name: Start Apache2
+    service: name=apache2 state=started
+
+  - name: making graphite listen on {{graphite_port}}
+    lineinfile: dest=/etc/apache2/sites-enabled/apache2-graphite.conf regexp=^\<VirtualHost line="<VirtualHost *:{{ graphite_port }}>"
+
+  - name: copying ports.conf
+    template: src=ports.conf dest=/etc/apache2/ports.conf force=yes
+    notify: restart apache2
+    notify: restart carbon-cache
+
+  - name: reverse proxy grafana to port {{grafana_proxy_port}} on {{server_dns_name}}
+    template: src=synup-grafana.conf dest=/etc/nginx/sites-enabled/grafana.conf force=yes
+    notify: restart nginx

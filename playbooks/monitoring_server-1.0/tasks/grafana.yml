@@ -1,0 +1,62 @@
+---
+  - name: Download grafana Deb
+    get_url: url=https://grafanarel.s3.amazonaws.com/builds/grafana_3.1.1-1470047149_amd64.deb dest=/opt/grafana_3.1.1-1470047149_amd64.deb
+
+  - name: ensure apt cache is up to date
+    apt: update_cache=yes
+
+  - name: Install prerequisite for grafana
+    apt: name={{item}} state=present
+    with_items:
+      - adduser
+      - libfontconfig
+
+  - name: Install postgres
+    apt: name={{item}} state=present
+    with_items:
+      - postgresql
+      - libpq-dev
+      - python-psycopg2
+    when: not graphite_installation
+
+  - name: make db folder for postgres
+    file: path=/data/postgresql state=directory owner=postgres group=postgres mode=0755
+    when: not postgres_configuration
+
+  - name: copying postgresql.conf
+    copy: src=postgresql.conf dest=/etc/postgresql/9.5/main/postgresql.conf owner=postgres group=postgres mode=0644 backup=yes
+    when: grafana_installation
+    when: not postgres_configuration
+    notify: restart postgres
+
+  - name: initdb postgres
+    shell: /usr/lib/postgresql/9.5/bin/initdb -D /data/postgresql/
+    become: yes
+    become_user: postgres
+    when: not postgres_configuration
+
+  - name: create postgres user
+    postgresql_user: name=graphite_user password={{postgres_user_password}} state=present
+    when: not postgres_configuration
+    become: true
+    become_user: postgres
+
+  - name: create postgres db for graphite
+    postgresql_db: name=graphite_db state=present owner=graphite_user
+    when: not postgres_configuration
+    become: true
+    become_user: postgres
+
+  - name: create postgres db for grafana
+    postgresql_db: name=grafana_db state=present owner=graphite_user
+    when: not postgres_configuration
+    become: true
+    become_user: postgres
+
+  - name: Installing grafana deb package
+    apt: deb=/opt/grafana_3.1.1-1470047149_amd64.deb
+    register: grafana_installation
+
+  - name: copying grafana.ini
+    template: src=grafana.ini dest=/etc/grafana/grafana.ini
+    register: grafana_done

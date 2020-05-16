@@ -1,0 +1,21 @@
+---
+  - name: Download grafana Deb
+    get_url: url=https://grafanarel.s3.amazonaws.com/builds/grafana_3.1.1-1470047149_amd64.deb dest=/opt/grafana_3.1.1-1470047149_amd64.deb
+
+  - name: ensure apt cache is up to date
+    apt: update_cache=yes
+
+  - name: Install prerequisite for grafana
+    apt: name={{item}} state=present
+    with_items:
+      - adduser
+      - libfontconfig
+
+  - name: Installing grafana deb package
+    apt: deb=/opt/grafana_3.1.1-1470047149_amd64.deb
+    register: grafana_installation
+
+  - name: copying grafana.ini
+    template: src=grafana.ini dest=/etc/grafana/grafana.ini
+    register: grafana_done
+    notify: restart grafana
