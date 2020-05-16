@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus Monitoring service
+After=network.target auditd.service
+
+[Service]
+Type=simple
+WorkingDirectory=/data/prometheus
+User=prometheus
+ExecStart=/opt/prometheus-{{ prometheus_version }}.linux-amd64/prometheus -config.file="/etc/default/prometheus/prometheus.yml" -alertmanager.url="http://localhost:9093" -storage.local.retention="1440h"
+Restart=always
+
+[Install]
+WantedBy=default.target

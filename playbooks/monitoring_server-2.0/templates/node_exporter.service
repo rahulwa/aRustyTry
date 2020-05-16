@@ -1,0 +1,11 @@
+[Unit]
+Description=Prometheus node exporter
+After=network.target auditd.service
+
+[Service]
+User=prometheus
+ExecStart=/opt/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64/node_exporter -collector.diskstats.ignored-devices="^(ram|loop|fd)\d+$" -collectors.enabled="diskstats,filesystem,loadavg,meminfo,stat,textfile,time,netdev"
+Restart=always
+
+[Install]
+WantedBy=default.target

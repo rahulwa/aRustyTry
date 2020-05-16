@@ -1,0 +1,24 @@
+---
+  - name: restart collectd
+    service: name=collectd state=restarted enabled=yes
+
+  - name: restart postgres
+    service: name=postgresql state=restarted enabled=yes
+
+  - name: restart carbon-cache
+    service: name=carbon-cache state=restarted enabled=yes
+
+  - name: restart grafana
+    service: name=grafana-server state=restarted enabled=yes
+
+  - name: restart mongodb
+    service: name=mongodb state=restarted enabled=yes
+
+  - name: restart apache2
+    service: name=apache2 state=restarted enabled=yes
+
+  - name: restart seyren
+    service: name=seyren state=restarted enabled=yes
+
+  - name: restart nginx
+    service: name=nginx state=restarted enabled=yes

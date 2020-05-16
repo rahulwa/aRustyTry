@@ -1,0 +1,61 @@
+# my global config
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'synup-prometheus-monitor'
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+   - "/etc/default/prometheus/alert.rules"
+  # - "second.rules"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 10s
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'aws'
+    ec2_sd_configs:
+    # The AWS Region.
+    - region: us-west-2
+      # The AWS API keys. If blank, the environment variables `AWS_ACCESS_KEY_ID`
+      # and `AWS_SECRET_ACCESS_KEY` are used.
+      access_key: {{ aws_access_key }}
+      secret_key: {{ aws_secret_key }}
+      # Refresh interval to re-read the instance list.
+      refresh_interval: 10s
+      # The port to scrape metrics from. If using the public IP address, this must
+      # instead be specified in the relabeling rule.
+      port: 9100
+
+    relabel_configs:
+      # Droping
+
+    - source_labels: [__meta_ec2_tag_monitoring]
+      regex: 'NaN|Null|Nil'
+      action: drop
+
+    - source_labels: [__meta_ec2_tag_monitoring]
+      regex: 'enabled'
+      action: keep
+
+    - source_labels: [__meta_ec2_tag_monitoring]
+      regex: 'disabled'
+      action: drop
+
+      # Use the instance ID as the instance label
+    - source_labels: [__meta_ec2_tag_Name, __meta_ec2_private_ip]
+      target_label: instance
+      separator: ':'

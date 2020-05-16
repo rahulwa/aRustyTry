@@ -1,0 +1,18 @@
+#!/bin/bash
+#prometheus node_exporter
+# description: prometheus metrics node_exporter for monitoring_server
+
+case $1 in
+    start)
+        /opt/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64/node_exporter -collector.diskstats.ignored-devices="^(ram|loop|fd)\d+$" -collectors.enabled="diskstats,filesystem,loadavg,meminfo,stat,textfile,time,netdev" &
+    ;;
+    stop)
+        for pid in `ps aux | grep node_exporter | awk '{print $2}'`; do kill -9 $pid; done
+    ;;
+    restart)
+        for pid in `ps aux | grep node_exporter | awk '{print $2}'`; do kill -9 $pid; done
+        sleep 5
+        /opt/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64/node_exporter -collector.diskstats.ignored-devices="^(ram|loop|fd)\d+$" -collectors.enabled="diskstats,filesystem,loadavg,meminfo,stat,textfile,time,netdev" &
+    ;;
+esac
+exit 0
