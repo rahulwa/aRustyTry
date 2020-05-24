@@ -5,7 +5,7 @@ We are using [pipenv](https://github.com/pypa/pipenv) as development workflow fo
 # Not recomendded but easier to start with
 # Installing boto3 globally
 # sudo pip3 install boto3
-awsudo -u tvlk-dev -- python get_tagged_resources.py -h
+python get_tagged_resources.py -h
 ```
 
 #### Setting up pipenv
@@ -38,7 +38,7 @@ pipenv install --three
 # activates venv on the shell
 pipenv shell
 # then you can run script
-awsudo -u tvlk-dev -- python get_tagged_resources.py -h
+python get_tagged_resources.py -h
 # You can directly run script with
 pipenv run python get_tagged_resources.py -h
 ```
@@ -47,7 +47,7 @@ pipenv run python get_tagged_resources.py -h
 This python script filters resources based on a tag and output it to a file in csv format.
 ```
 # will now output all elasticache nodes with ProductDomain tag absent
-awsudo -u tvlk-dev -- python get_tagged_resources.py --resource-type elasticache -file untagged_pd.csv --tag ProductDomain
+python get_tagged_resources.py --resource-type elasticache -file untagged_pd.csv --tag ProductDomain
 # Get help printed
 python get_tagged_resources.py -h
 ```
