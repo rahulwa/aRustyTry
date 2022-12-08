@@ -5,5 +5,5 @@ authors = ["Rahul Sinha <rahul@rahulwa.com>"]
 edition = "2018"
 
 [dependencies]
-rocket = "0.4.0"
+rocket = "0.4.7"
 concurrent-hashmap = "0.2.2"
